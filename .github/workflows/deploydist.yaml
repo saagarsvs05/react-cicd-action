@@ -5,7 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Get Code"
-        run: |
-            echo "cloning repo.."
-            echo "${{toJson(github)}}"
-            git clone https://github.com/${{github.repository}}.git
+        uses: actions/checkout@v4
+      - name: Install Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci # you can run npm install npm ci will look package-lock file. most use is npm ci
+      - name: Run tests
+        run: npm run test  
+        # run: |
+        #     echo "cloning repo.."
+        #     echo "${{toJson(github)}}"
+        #     git clone https://github.com/${{github.repository}}.git
